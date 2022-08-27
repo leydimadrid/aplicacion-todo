@@ -1,16 +1,18 @@
 import { useState } from "react";
 import Error from "./Error";
+import Tareas from "./Tareas";
 
-const Formulario = () => {
+const Formulario = ({tarea, setTarea}) => {
+
   const [titulo, setTitulo] = useState("");
   const [fecha, setFecha] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
   const [error, setError] = useState(false);
 
+  //Validación formulario
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     if ([titulo, fecha, descripcion].includes ("")) {
       setError(true)
@@ -19,6 +21,17 @@ const Formulario = () => {
 
     setError(false);
 
+    //Objeto de tareas
+    const objetoTareas = {
+      titulo,
+      fecha,
+      descripcion
+    }
+    
+    // Agregar varias tareas
+    setTarea ([...tarea, objetoTareas]);
+
+    // Resetear formulario
     setTitulo ('');
     setFecha ('');
     setDescripcion ('');
