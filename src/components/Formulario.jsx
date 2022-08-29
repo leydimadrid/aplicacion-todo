@@ -1,14 +1,18 @@
 import { useState } from "react";
 import Error from "./Error";
-import Tareas from "./Tareas";
 
-const Formulario = ({tarea, setTarea}) => {
+const Formulario = ({tareas, setTareas}) => {
 
   const [titulo, setTitulo] = useState("");
   const [fecha, setFecha] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
   const [error, setError] = useState(false);
+
+  const generarId = () => {
+    const id= Math.random().toString(20).substr(2);
+    return id
+  };
 
   //Validación formulario
   const handleSubmit = (e) => {
@@ -25,11 +29,12 @@ const Formulario = ({tarea, setTarea}) => {
     const objetoTareas = {
       titulo,
       fecha,
-      descripcion
-    }
+      descripcion,
+      id: generarId(),
+    };
     
     // Agregar varias tareas
-    setTarea ([...tarea, objetoTareas]);
+    setTareas ([...tareas, objetoTareas]);
 
     // Resetear formulario
     setTitulo ('');
@@ -91,7 +96,7 @@ const Formulario = ({tarea, setTarea}) => {
             value="CREAR TAREA"
             className="block bg-violet-700 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-800 cursor-pointer w-full"
           />
-          {error && <Error / >}
+          {error && <Error />}
         </form>
       </div>
     </div>
