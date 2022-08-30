@@ -1,6 +1,6 @@
 import Tareas from "./Tareas";
 
-const Tareaspendientes = ({ tareas }) => {
+const Tareaspendientes = ({ tareas, setTarea }) => {
   return (
     <div className="md-w-1/2 lg:w-2/5 mx-5 mb-10 md:h-screen overflow-scroll">
       {tareas && tareas.length ? (
@@ -10,7 +10,7 @@ const Tareaspendientes = ({ tareas }) => {
           </h1>
 
           {tareas.map((tarea) => {
-            return <Tareas key={tareas.id} tarea={tarea} />;
+            return <Tareas key={tarea.id} tarea={tarea} setTarea={setTarea} />;
           })}
         </>
       ) : (

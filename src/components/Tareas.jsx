@@ -1,6 +1,5 @@
-const Tareas = ({tarea}) => {
-
-  const {titulo, fecha, descripcion} = tarea;
+const Tareas = ({ tarea, setTarea }) => {
+  const { titulo, fecha, descripcion } = tarea;
 
   return (
     <div className="bg-white  text-gray-700 font-medium text-sm shadow-xl rounded-lg py-5 px-5 mt-4 uppercase">
@@ -8,13 +7,28 @@ const Tareas = ({tarea}) => {
         TÍTULO: <span className="font-normal normal-case">{titulo}</span>
       </b>
       <b className="block text-left uppercase">
-        FECHA:{" "}
-        <span className="font-normal normal-case">{fecha}</span>
+        FECHA: <span className="font-normal normal-case">{fecha}</span>
       </b>
       <b className="block text-left uppercase">
         DESCRIPCIÓN:{" "}
         <span className="font-normal normal-case">{descripcion}</span>{" "}
       </b>
+
+      <div className="flex justify-between">
+        <button
+          className=" bg-violet-600 rounded-lg text-white p-2 mt-4 px-10 hover:bg-violet-800 cursor-pointer"
+          type="button"
+          onClick={()=> setTarea(tarea)}
+        >
+          Modificar
+        </button>
+        <button
+          className=" bg-violet-600 rounded-lg text-white p-2 mt-4 px-10 hover:bg-violet-800 cursor-pointer"
+          type="button"
+        >
+          Borrar
+        </button>
+      </div>
     </div>
   );
 };
