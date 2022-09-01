@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Error from "./Error";
 
-const Formulario = ({ tareas, setTareas, tarea }) => {
+const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
   const [titulo, setTitulo] = useState("");
   const [fecha, setFecha] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -9,13 +9,12 @@ const Formulario = ({ tareas, setTareas, tarea }) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (Object.keys(tarea).length > 0 ) {
+    if (Object.keys(tarea).length > 0) {
       setTitulo(tarea.titulo);
       setFecha(tarea.fecha);
       setDescripcion(tarea.descripcion);
     }
-    
-  }, [tarea]);//
+  }, [tarea]);
 
   const generarId = () => {
     const id = Math.random().toString(20).substr(2);
@@ -38,11 +37,23 @@ const Formulario = ({ tareas, setTareas, tarea }) => {
       titulo,
       fecha,
       descripcion,
-      id: generarId(),
     };
 
-    // Agregar varias tareas
-    setTareas([...tareas, objetoTareas]);
+    if (tarea.id) {
+      //Editando el registro
+      objetoTareas.id = tarea.id;
+
+      const tareasModificadas = tareas.map((tareaState) =>
+        tareaState.id === tarea.id ? objetoTareas : tareaState
+      );
+
+      setTareas(tareasModificadas)
+      setTarea({});
+
+    } else {
+      // Nuevo registro
+      (objetoTareas.id = generarId()), setTareas([...tareas, objetoTareas]); // Agregar varias tareas
+    }
 
     // Resetear formulario
     setTitulo("");
@@ -97,19 +108,19 @@ const Formulario = ({ tareas, setTareas, tarea }) => {
           ></textarea>
 
           {!tarea.id ? (
-          <input
-            id="enviar"
-            type="submit"
-            value="CREAR TAREA"
-            className="block bg-violet-700 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-800 cursor-pointer w-full"
-          />
+            <input
+              id="enviar"
+              type="submit"
+              value="CREAR TAREA"
+              className="block bg-violet-700 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-800 cursor-pointer w-full"
+            />
           ) : (
             <input
-            id="enviar"
-            type="submit"
-            value="ACTUALIZAR TAREA"
-            className="block bg-purple-600 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-700 cursor-pointer w-full"
-          />
+              id="enviar"
+              type="submit"
+              value="MODIFICAR TAREA"
+              className="block bg-purple-600 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-700 cursor-pointer w-full"
+            />
           )}
           {error && <Error />}
         </form>
