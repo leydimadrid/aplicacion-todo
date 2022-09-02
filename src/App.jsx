@@ -15,7 +15,7 @@ function App() {
     };
 
     obtenerTareasLocalStorage();
-  },[]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("tareas", JSON.stringify(tareas));
@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="mx-auto">
       <Header />
-      <div className="mt-12 md:flex mx-auto justify-center">
+      <div className="mt-12 md:flex justify-center ">
         <Formulario
           tarea={tarea}
           tareas={tareas}

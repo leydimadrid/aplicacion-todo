@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import Error from "./Error";
-import TareaEnviada from "./TareaEnviada";
-
-
 
 const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
   const [titulo, setTitulo] = useState("");
@@ -10,7 +7,6 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
   const [descripcion, setDescripcion] = useState("");
 
   const [error, setError] = useState(false);
-  const [enviada, setEnviada] = useState(false);
 
   useEffect(() => {
     if (Object.keys(tarea).length > 0) {
@@ -32,14 +28,10 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
     if ([titulo, fecha, descripcion].includes("")) {
       setError(true);
       return;
-    } else {
-      setEnviada(true);
     }
-    
 
     setError(false);
 
-    
     //Objeto de tareas
     const objetoTareas = {
       titulo,
@@ -47,42 +39,38 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
       descripcion,
     };
 
+    //Editando el registro
     if (tarea.id) {
-      //Editando el registro
       objetoTareas.id = tarea.id;
 
       const tareasModificadas = tareas.map((tareaState) =>
         tareaState.id === tarea.id ? objetoTareas : tareaState
       );
-      
-      setTareas(tareasModificadas)
+
+      setTareas(tareasModificadas);
       setTarea({});
-      
-      
-    } else {
+
       // Nuevo registro
+    } else {
       (objetoTareas.id = generarId()), setTareas([...tareas, objetoTareas]); // Agregar varias tareas
     }
-    
+
     // Resetear formulario
     setTitulo("");
     setFecha("");
     setDescripcion("");
-
   };
-  
+
   return (
     <div className="mx-5">
-      <h1 className="font-black text-2xl text-center mb-4">
-        Crear tarea 👇
-      </h1>
+      <h1 className="font-black text-2xl text-center mb-4">Crear tarea 👇</h1>
       <div>
         <form
           onSubmit={handleSubmit}
-          className="bg-white shadow-xl rounded-lg py-5 px-5 mb-3 w-80 "
+          className="bg-white shadow-xl rounded-lg py-5 px-5 mb-3"
         >
-          <label className="block text-gray-700 font-medium text-left text-sm mb-1">
-            TITULO
+          <label className="block text-gray-700 font-medium text-left text-sm mb-1 uppercase">
+            Título
           </label>
           <input
             id="titulo"
@@ -93,8 +81,8 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
             onChange={(e) => setTitulo(e.target.value)}
           />
 
-          <label className="block text-gray-700 font-medium text-left text-sm mb-1">
-            FECHA
+          <label className="block text-gray-700 font-medium text-left text-sm mb-1 uppercase">
+            Fecha
           </label>
           <input
             id="fecha"
@@ -105,8 +93,8 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
             onChange={(e) => setFecha(e.target.value)}
           />
 
-          <label className="block text-gray-700 font-medium text-left text-sm mb-1">
-            DESCRIPCIÓN
+          <label className="block text-gray-700 font-medium text-left text-sm mb-1 uppercase">
+            Descripción
           </label>
           <textarea
             id="descripcion"
@@ -133,7 +121,6 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
             />
           )}
           {error && <Error />}
-          {enviada && <TareaEnviada />}
         </form>
       </div>
     </div>
