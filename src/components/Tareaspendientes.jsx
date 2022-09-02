@@ -2,7 +2,7 @@ import Tareas from "./Tareas";
 
 const Tareaspendientes = ({ tareas, setTarea, borrarTarea }) => {
   return (
-    <div className="md-w-1/2 lg:w-2/5 mx-5 mb-10 md:h-screen overflow-scroll">
+    <div className="w-96 mx-5 mb-10 md:h-screen overflow-auto">
       {tareas && tareas.length ? (
         <>
           <h1 className="font-black text-2xl text-center mb-4">
@@ -22,7 +22,7 @@ const Tareaspendientes = ({ tareas, setTarea, borrarTarea }) => {
         </>
       ) : (
         <h1 className="font-black text-2xl text-center mb-4">
-          No tengo tareas pendientes
+          No tengo tareas pendientes 😄
         </h1>
       )}
     </div>

@@ -2,7 +2,9 @@ const Tareas = ({ tarea, setTarea, borrarTarea }) => {
   const { titulo, fecha, descripcion, id } = tarea;
 
   const handleBorrar = () => {
+    
     const preguntaBorrar = confirm('¿Seguro quieres eliminar la tarea ☹️?');
+    
 
     if(preguntaBorrar){
       borrarTarea(id);
@@ -11,14 +13,14 @@ const Tareas = ({ tarea, setTarea, borrarTarea }) => {
 
   return (
     <div className="bg-white  text-gray-700 font-medium text-sm shadow-xl rounded-lg py-5 px-5 mt-4 uppercase">
-      <b className="block text-left uppercase">
-        TÍTULO: <span className="font-normal normal-case">{titulo}</span>
+      <b className="block text-left uppercase mb-1">
+        Título: <span className="font-normal normal-case">{titulo}</span>
+      </b>
+      <b className="block text-left uppercase mb-1">
+        Fecha: <span className="font-normal normal-case">{fecha}</span>
       </b>
       <b className="block text-left uppercase">
-        FECHA: <span className="font-normal normal-case">{fecha}</span>
-      </b>
-      <b className="block text-left uppercase">
-        DESCRIPCIÓN:{" "}
+        Descripción:{" "}
         <span className="font-normal normal-case">{descripcion}</span>{" "}
       </b>
 

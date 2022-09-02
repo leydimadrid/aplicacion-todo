@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import Error from "./Error";
+import TareaEnviada from "./TareaEnviada";
+
+
 
 const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
   const [titulo, setTitulo] = useState("");
@@ -7,6 +10,7 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
   const [descripcion, setDescripcion] = useState("");
 
   const [error, setError] = useState(false);
+  const [enviada, setEnviada] = useState(false);
 
   useEffect(() => {
     if (Object.keys(tarea).length > 0) {
@@ -28,10 +32,14 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
     if ([titulo, fecha, descripcion].includes("")) {
       setError(true);
       return;
+    } else {
+      setEnviada(true);
     }
+    
 
     setError(false);
 
+    
     //Objeto de tareas
     const objetoTareas = {
       titulo,
@@ -46,63 +54,65 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
       const tareasModificadas = tareas.map((tareaState) =>
         tareaState.id === tarea.id ? objetoTareas : tareaState
       );
-
+      
       setTareas(tareasModificadas)
       setTarea({});
-
+      
+      
     } else {
       // Nuevo registro
       (objetoTareas.id = generarId()), setTareas([...tareas, objetoTareas]); // Agregar varias tareas
     }
-
+    
     // Resetear formulario
     setTitulo("");
     setFecha("");
     setDescripcion("");
-  };
 
+  };
+  
   return (
     <div className="mx-5">
       <h1 className="font-black text-2xl text-center mb-4">
-        Creación de tareas
+        Crear tarea 👇
       </h1>
       <div>
         <form
           onSubmit={handleSubmit}
-          className="bg-white shadow-xl rounded-lg py-5 px-5 mb-3 "
+          className="bg-white shadow-xl rounded-lg py-5 px-5 mb-3 w-80 "
         >
-          <label className="block text-gray-700 font-medium text-left text-sm">
+          <label className="block text-gray-700 font-medium text-left text-sm mb-1">
             TITULO
           </label>
           <input
             id="titulo"
             type="text"
             placeholder="Título de la tarea"
-            className="border-2 rounded-md md p-1 w-full"
+            className="border-2 rounded-md p-1 w-full mb-3 "
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
           />
 
-          <label className="block text-gray-700 font-medium text-left text-sm">
+          <label className="block text-gray-700 font-medium text-left text-sm mb-1">
             FECHA
           </label>
           <input
             id="fecha"
             type="date"
             placeholder="Título de la tarea"
-            className="border-2 rounded-md md p-1 w-full"
+            className="border-2 rounded-md p-1 w-full mb-3"
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
           />
 
-          <label className="block text-gray-700 font-medium text-left text-sm">
+          <label className="block text-gray-700 font-medium text-left text-sm mb-1">
             DESCRIPCIÓN
           </label>
           <textarea
             id="descripcion"
             type="text"
             placeholder="Descripción de la tarea"
-            className="border-2 rounded-md md p-1 w-full"
+            className="border-2 rounded-md p-1 w-full"
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
           ></textarea>
@@ -112,17 +122,18 @@ const Formulario = ({ tareas, setTareas, tarea, setTarea }) => {
               id="enviar"
               type="submit"
               value="CREAR TAREA"
-              className="block bg-violet-700 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-800 cursor-pointer w-full"
+              className="block font-semibold bg-violet-700 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-800 cursor-pointer w-full"
             />
           ) : (
             <input
               id="enviar"
               type="submit"
               value="MODIFICAR TAREA"
-              className="block bg-purple-600 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-700 cursor-pointer w-full"
+              className="block font-semibold bg-purple-600 rounded-lg text-white p-2 mt-2 px-5 mx-auto hover:bg-violet-700 cursor-pointer w-full"
             />
           )}
           {error && <Error />}
+          {enviada && <TareaEnviada />}
         </form>
       </div>
     </div>
